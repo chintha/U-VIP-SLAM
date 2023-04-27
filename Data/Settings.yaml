@@ -1,0 +1,93 @@
+%YAML:1.0
+
+# Camera Parameters. Adjust them!
+bagfile: "/home/chinthaka/DataSet/Example.bag"
+test.InitVIOTmpPath: "/home/chinthaka/ORB_SLAM/temp_files/"
+test.DiscardTime: 0.0
+imutopic: "/imu0"
+imagetopic: "/camera/image_raw"
+depthtopic: "/barometer_node/depth"
+
+# IMU noises
+gyr.noise: 0.01414213562373 #should give standeard deveation(SD), in case of noise density(ND), SD = ND*sqrt(Hz. of the IMU)
+acc.noise: 0.28284271247462
+gyr.rw : 5.0e-5 # Should give Randam walk
+acc.rw : 1.0e-3
+
+# Depth noise
+depth.noise : 0.02
+
+# Timestamp shift. Timage = Timu + image_delay
+Camera.delaytoimu: 0.0
+
+# acc=acc*9.8, if below is 1
+IMU.multiplyG: 0
+
+# camera-imu frame transformation, Pi = Tic * Pc
+Camera.Tbc:
+ [0.0148655429818, -0.999880929698, 0.00414029679422, -0.0216401454975,
+  0.999557249008, 0.0149672133247, 0.025715529948, -0.064676986768,
+  -0.0257744366974, 0.00375618835797, 0.999660727178, 0.00981073058949,
+  0.0, 0.0, 0.0, 1.0]
+
+# Local Window size
+LocalMapping.LocalWindowSize: 10
+
+
+# Camera calibration parameters (OpenCV) 
+Camera.fx: 609.2855
+Camera.fy: 609.3422 
+Camera.cx: 351.4274
+Camera.cy: 237.7324
+
+# Camera distortion paremeters (OpenCV) --
+Camera.k1: -0.3492
+Camera.k2: 0.1363
+Camera.p1: 0.0
+Camera.p2: 0.0
+
+# Camera frames per second 
+Camera.fps: 30.0
+
+# Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
+Camera.RGB: 1
+
+#######################################################
+# SLAM running mode,0- monocular 1- visual-inertial , 2- Visual-Inertial-Pressure
+Mode: 0
+
+# Use Enhancement
+Enhance: 1
+# pixcel distance feaure selection
+Px_distance: 20
+# Enable Loop closer
+LoopC: 1
+# time for VI initialisation
+time.Init: 30
+#Pyramic levels in KTL Tracking, if not given taken as 5
+Pyramid.Level: 5
+#Window size for Traking in KTL, if not given taken as 21
+Window.Size : 21
+#camera type 0:pin hole 1: fisheye 
+Camera.Fisheye : 0
+
+########################################################
+
+#--------------------------------------------------------------------------------------------
+### Changing the parameters below could seriously degradate the performance of the system
+
+# ORB Extractor: Number of features per image
+ORBextractor.nFeatures: 600
+
+# ORB Extractor: Scale factor between levels in the scale pyramid 	
+ORBextractor.scaleFactor: 1.2
+
+# ORB Extractor: Number of levels in the scale pyramid	
+ORBextractor.nLevels: 8
+
+# ORB Extractor: Fast threshold (lower less restrictive)			
+ORBextractor.fastTh: 15
+
+# ORB Extractor: Score to sort features. 0 -> Harris Score, 1 -> FAST Score			
+ORBextractor.nScoreType: 0
+

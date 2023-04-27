@@ -1,0 +1,104 @@
+%YAML:1.0
+
+# Path to save tmp files/results
+test.InitVIOTmpPath: "/home/chinthaka/ORB_SLAM/temp_files/"
+
+## For good initialization (no movement at the beginning for some bag)
+test.DiscardTime: 0
+
+bagfile: "/home/chinthaka/harbor_sequence_1.bag"
+imutopic: "/rtimulib_node/imu"
+imagetopic: "/camera/image_raw"
+depthtopic: "/barometer_node/depth"
+
+# IMU noises
+gyr.noise: 0.01414213562373 #should give standeard deveation(SD), in case of noise density(ND), SD = ND*sqrt(Hz. of the IMU)
+acc.noise: 0.28284271247462
+gyr.rw : 5.0e-5 # Should give Randam walk
+acc.rw : 1.0e-3
+
+# Depth noise
+depth.noise : 0.5 # originally 0.2
+
+# Camera calibration parameters (OpenCV) 
+Camera.fx: 413.32595366596017
+Camera.fy: 413.70198739483686
+Camera.cx: 305.9507483284928
+Camera.cy: 259.4439948946375
+
+# Camera distortion paremeters (OpenCV) --
+Camera.k1: -0.06125568297136998
+Camera.k2: -0.003796743395135256
+Camera.p1: 0.027326634771204592
+Camera.p2: -0.030296403142887066
+
+# Camera frames per second 
+Camera.fps: 20.0
+
+# Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
+Camera.RGB: 1
+
+Camera.col: 640
+Camera.row: 512
+
+# IR projector baseline times fx (aprox.)
+Camera.bf: 40.0
+#--------------------------------------------------------------------------------------------
+
+# Timestamp shift. Timage = Timu + image_delay
+Camera.delaytoimu: -0.0403806549886
+
+# acc=acc*9.8, if below is 1
+IMU.multiplyG: 0
+
+# camera-imu frame transformation, Pi = Tic * Pc transformation of body w.r.t. camera
+Camera.Tbc:
+ [-0.99978035,  0.01210101,  0.01711187, -0.01866921,
+  0.0169654,  -0.01210461,  0.9997828,   0.02125636,
+  0.01230552,  0.99985351,  0.01189665, -0.1489863,
+  0.0, 0.0, 0.0, 1.0]
+
+# Local Window size
+LocalMapping.LocalWindowSize: 10
+
+### Changing the parameters below could seriously degradate the performance of the system
+
+# ORB Extractor: Number of features per image
+ORBextractor.nFeatures: 400
+
+# ORB Extractor: Scale factor between levels in the scale pyramid 	
+ORBextractor.scaleFactor: 1.2
+
+# ORB Extractor: Number of levels in the scale pyramid	
+ORBextractor.nLevels: 8
+
+# ORB Extractor: Fast threshold (lower less restrictive)			
+ORBextractor.fastTh: 20
+
+# ORB Extractor: Score to sort features. 0 -> Harris Score, 1 -> FAST Score			
+ORBextractor.nScoreType: 0
+
+#######################################################
+# SLAM running mode,0- monocular 1- visual-inertial , 2- Visual-Inertial-Pressure
+Mode: 2
+
+# Use Enhancement
+Enhance: 1
+# pixcel distance feaure selection
+Px_distance: 20
+# Enable Loop closer
+LoopC: 0
+# Enable loopcloser with Haloc library, First LoopC = 1
+LoopCHALOC: 0
+# Enable loopcloser with BoF library, First LoopC = 1
+LoopCBOF: 0
+# time for VI initialisation
+time.Init: 22
+#Pyramic levels in KTL Tracking, if not given taken as 5
+Pyramid.Level: 5
+#Window size for Traking in KTL, if not given taken as 21
+Window.Size : 21
+#camera type 0:pin hole 1: fisheye 
+Camera.Fisheye : 1
+
+########################################################

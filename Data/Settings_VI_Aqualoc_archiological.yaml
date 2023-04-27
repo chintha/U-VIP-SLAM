@@ -1,0 +1,128 @@
+%YAML:1.0
+
+# Path to save tmp files/results
+test.InitVIOTmpPath: "/home/chinthaka/ORB_SLAM/temp_files/"
+
+## For good initialization (no movement at the beginning for some bag)
+test.DiscardTime: 0.0
+
+bagfile: "/media/sf_WindowSF/archaeo_sequence_4.bag"
+imutopic: "/rtimulib_node/imu"
+imagetopic: "/camera/image_raw"
+depthtopic: "/barometer_node/depth"
+
+# IMU noises
+gyr.noise: 0.0424264068 #should give standeard deveation(SD), in case of noise density(ND), SD = ND*sqrt(Hz. of the IMU)
+acc.noise: 0.7071067811
+gyr.rw : 1.0e-4 # Should give Randam walk
+acc.rw : 1.5e-3
+
+# Depth noise
+depth.noise : 0.03
+
+
+# Camera calibration parameters (OpenCV) 
+Camera.fx: 543.3327734182214
+Camera.fy: 542.398772982566
+Camera.cx: 489.02536042247897
+Camera.cy: 305.38727712002805
+
+# Camera distortion paremeters (OpenCV) --
+Camera.k1: -0.1255945656257394
+Camera.k2: 0.053221287232781606
+Camera.p1: 9.94070021080493e-05
+Camera.p2: 9.550660927242349e-05
+
+# Camera frames per second 
+Camera.fps: 20.0
+
+# Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
+Camera.RGB: 1
+
+Camera.col: 968
+Camera.row: 608
+
+# IR projector baseline times fx (aprox.)
+Camera.bf: 40.0
+#--------------------------------------------------------------------------------------------
+
+# Timestamp shift. Timage = Timu + image_delay
+Camera.delaytoimu: -0.053694112369382575
+
+# acc=acc*9.8, if below is 1
+IMU.multiplyG: 0
+
+# camera-imu frame transformation, Pi = Tic * Pc transformation of body w.r.t. camera
+Camera.Tbc:
+ [-0.9993722142403839, 0.009015607185121647, 0.034262169098799616, -0.016780437426353788,
+  -0.03437488851396028, -0.012659747009765032, -0.9993288236838265, -0.029657550728147596,
+   -0.008575805730306488, -0.999879217522162, 0.012961709892746132, -0.17493949845924564,
+  0.0, 0.0, 0.0, 1.0]
+
+# Local Window size
+LocalMapping.LocalWindowSize: 10
+
+### Changing the parameters below could seriously degradate the performance of the system
+
+# ORB Extractor: Number of features per image
+ORBextractor.nFeatures: 800
+
+# ORB Extractor: Scale factor between levels in the scale pyramid 	
+ORBextractor.scaleFactor: 1.2
+
+# ORB Extractor: Number of levels in the scale pyramid	
+ORBextractor.nLevels: 8
+
+
+# ORB Extractor: Score to sort features. 0 -> Harris Score, 1 -> FAST Score			
+ORBextractor.nScoreType: 0
+
+# Close/Far threshold. Baseline times.
+ThDepth: 40.0
+
+# Deptmap values factor
+DepthMapFactor: 1.0
+
+#ORBextractor.iniThFAST: 30
+#ORBextractor.minThFAST: 10
+# ORB Extractor: Fast threshold (lower less restrictive)			
+ORBextractor.fastTh: 10
+
+# Constant Velocity Motion Model (0 - disabled, 1 - enabled [recommended])
+UseMotionModel: 1
+
+#######################################################
+# SLAM running mode,0- monocular 1- visual-inertial , 2- Visual-Inertial-Pressure
+Mode: 2
+
+# Use Enhancement
+Enhance: 1
+# pixcel distance feaure selection
+Px_distance: 20
+# Enable Loop closer
+LoopC: 0
+# time for VI initialisation
+time.Init: 80
+#Pyramic levels in KTL Tracking, if not given taken as 5
+Pyramid.Level: 5
+#Window size for Traking in KTL, if not given taken as 21
+Window.Size : 21
+#camera type 0:pin hole 1: fisheye 
+Camera.Fisheye : 0
+
+
+########################################################
+
+#--------------------------------------------------------------------------------------------
+# Viewer Parameters
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3
+Viewer.ViewpointX: 0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500
