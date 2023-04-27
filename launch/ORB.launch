@@ -1,0 +1,5 @@
+<launch>
+
+    <node name="USLAM" pkg="USLAM" type="USLAM" output="screen" arg="Data/ORBvoc.txt Data/Settings.yaml"/>
+    
+</launch>
