@@ -3,6 +3,7 @@ Underwater Visual Inertial Pressure SLAM (U-VIP SLAM), a new robust monocular vi
 We develop the code on top of ORB SLAM
 
 #2. Prerequisites (dependencies)
+We tested all in the Ubuntu 18.04.6 LTS
 
 ##2.1 Boost
 
@@ -10,30 +11,35 @@ We use the Boost library to launch the different threads of our SLAM system.
 
 sudo apt-get install libboost-all-dev 
 
-##2.2 ROS We use ROS to receive images from the camera or from a recorded sequence (rosbag), and for visualization (rviz, image_view). We have tested ORB-SLAM in Ubuntu 12.04 with ROS Fuerte, Groovy and Hydro; and in Ubuntu 14.04 with ROS Indigo. If you do not have already installed ROS in your computer, we recommend you to install the Full-Desktop version of ROS Fuerte (http://wiki.ros.org/fuerte/Installation/Ubuntu).
+##2.2 ROS 
+We use ROS to receive images from the camera or from a recorded sequence (rosbag), and for visualization (rviz, image_view). We have tested ORB-SLAM in Ubuntu 18.04.6 LTS with ROS Melodic. If you do not have already installed ROS in your computer, we recommend you to install the Full-Desktop version of ROS melodic (http://wiki.ros.org/melodic/Installation/Ubuntu).
 
-If you use ROS Indigo, remove the depency of opencv2 in the manifest.xml.
+##2.3 
+OpenCV We use OpenCV to manipulate images and features. We tested OpenCV 3.4.6 Dowload and install instructions can be found at: http://opencv.org/
 
-##2.3 OpenCV We use OpenCV to manipulate images and features. If you use a ROS version older than ROS Indigo, OpenCV is already included in the ROS distribution. In newer version of ROS, OpenCV is not included and you will need to install it. We tested OpenCV 2.4. Dowload and install instructions can be found at: http://opencv.org/
-
-##2.4 g2o (included in Thirdparty) We use a modified version of g2o (see original at https://github.com/RainerKuemmerle/g2o) to perform optimizations. In order to compile g2o you will need to have installed Eigen3 (at least 3.1.0).
+##2.4 
+g2o (included in Thirdparty folder) We use a modified version of g2o (see original at https://github.com/RainerKuemmerle/g2o) to perform optimizations. In order to compile g2o you will need to have installed Eigen3 (We used eigen 3.3.4).
 
 sudo apt-get install libeigen3-dev
 
-##2.5 DBoW2 (included in Thirdparty) We make use of some components of the DBoW2 and DLib library (see original at https://github.com/dorian3d/DBoW2) for place recognition and feature matching. There are no additional dependencies to compile DBoW2.
+##2.5 
+DBoW2 (included in Thirdparty) We make use of some components of the DBoW2 and DLib library (see original at https://github.com/dorian3d/DBoW2) for place recognition and feature matching. There are no additional dependencies to compile DBoW2.
+
+##2.6
+pangolin, install pangolin from https://github.com/stevenlovegrove/Pangolin We use version 0.4
 
 #3. Installation
 
-    Make sure you have installed ROS and all library dependencies (boost, eigen3, opencv, blas, lapack).
+Make sure you have installed ROS and all library dependencies (boost, eigen3, opencv, blas, lapack, cholmod, PCL).
 
-    Clone the repository:
+Clone the repository:
 git clone https://github.com/chintha/U-VIP-SLAM.git
 
-    Add the path where you cloned ORB-SLAM to the ROS_PACKAGE_PATH environment variable. To do this, modify your .bashrc and add at the bottom the following line (replace PATH_TO_PARENT_OF_ORB_SLAM):
+Add the path where you cloned U-VIP-SLAM to the ROS_PACKAGE_PATH environment variable. To do this, modify your .bashrc and add at the bottom the following line (replace PATH_TO_PARENT_OF_ORB_SLAM):
 
-     export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:PATH_TO_PARENT_OF_ORB_SLAM
+export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:PATH_TO_PARENT_OF_U-VIP_SLAM
 
-    Build g2o. Go into Thirdparty/g2o/ and execute:
+Build g2o. Go into PATH_TO_PARENT_OF_U-VIP_SLAM/Thirdparty/g2o/ and execute:
 
      mkdir build
      cd build
@@ -42,7 +48,7 @@ git clone https://github.com/chintha/U-VIP-SLAM.git
 
     Tip: To achieve the best performance in your computer, set your favorite compilation flags in line 61 and 62 of Thirdparty/g2o/CMakeLists.txt (by default -03 -march=native)
 
-    Build DBoW2. Go into Thirdparty/DBoW2/ and execute:
+Build DBoW2. Go into PATH_TO_PARENT_OF_U-VIP_SLAM/Thirdparty/DBoW2/ and execute:
 
      mkdir build
      cd build
@@ -51,9 +57,9 @@ git clone https://github.com/chintha/U-VIP-SLAM.git
 
     Tip: Set your favorite compilation flags in line 4 and 5 of Thirdparty/DBoW2/CMakeLists.txt (by default -03 -march=native)
 
-    Build ORB_SLAM. In the ORB_SLAM root execute:
+Build U-VIP_SLAM. In the U-VIP_SLAM root execute:
 
-    If you use ROS Indigo, remove the depency of opencv2 in the manifest.xml.
+    
 
      mkdir build
      cd build
@@ -65,66 +71,37 @@ git clone https://github.com/chintha/U-VIP-SLAM.git
 #4. Usage
 
 See section 5 to run the Example Sequence.
+    Launch ros : get a terminal and run roscore
+    Launch U-VIP-SLAM from the terminal (roscore should have been already executed): navigate to the U-VIP root folder and get a new terminal. run 
+    
+    rosrun USLAM USLAM PATH_TO_VOCABULARY PATH_TO_SETTINGS_FILE
+    you can download the Vocabulary file in https://drive.google.com/file/d/15wJsFqKzJYPKV09FJil7l8xKtn7vDFsn/view?usp=sharing
+    you can find the setting files in data folder in hte repository, If you are using your own data, make a setting file accordingly
 
-    Launch ORB-SLAM from the terminal (roscore should have been already executed):
+You have to provide the path to the ORB vocabulary and to the settings file. The paths must be absolute.
 
-     rosrun ORB_SLAM ORB_SLAM PATH_TO_VOCABULARY PATH_TO_SETTINGS_FILE
+    The last processed frame is published to the topic /UW_SLAM/Frame. You can visualize it using image_view:
 
-You have to provide the path to the ORB vocabulary and to the settings file. The paths must be absolute or relative to the ORB_SLAM directory.
-We already provide the vocabulary file we use in ORB_SLAM/Data/ORBvoc.txt.tar.gz. Uncompress the file, as it will be loaded much faster.
+     rosrun image_view image_view image:=/UW_SLAM/Frame _autosize:=true
 
-    The last processed frame is published to the topic /ORB_SLAM/Frame. You can visualize it using image_view:
+    The map is published to the topic /USLAM/Map, the current camera pose and global world coordinate origin are sent through /tf in frames /USLAM/Camera and /USLAM/World respectively. Run rviz to visualize the map:
+    navigate to the root U-VIP folder and get a new terminal, then run,
+    rosrun rviz rviz -d Data/rviz.rviz
 
-     rosrun image_view image_view image:=/ORB_SLAM/Frame _autosize:=true
+U-VIP_SLAM will receive the images from the topic /camera/image_raw. Adjust the rosbag path ('bagfile:') in the setting file. If you have a sequence with individual image files, you will need to generate a bag from them. We provide a tool to do that: https://github.com/raulmur/BagFromImages.
 
-    The map is published to the topic /ORB_SLAM/Map, the current camera pose and global world coordinate origin are sent through /tf in frames /ORB_SLAM/Camera and /ORB_SLAM/World respectively. Run rviz to visualize the map:
 
-    in ROS Fuerte:
+#5. Example Sequence 
+We provide the settings and the rosbag of an example sequence from Aqualoc dataset from https://www.lirmm.fr/aqualoc/
+    
+    Download one of the rosbag file: For testing we recommond downloding harbor_sequence_1.bag, Uncompress the file
 
-     rosrun rviz rviz -d Data/rviz.vcg
-
-    in ROS Groovy or a newer version:
-
-     rosrun rviz rviz -d Data/rviz.rviz
-
-    ORB_SLAM will receive the images from the topic /camera/image_raw. You can now play your rosbag or start your camera node. If you have a sequence with individual image files, you will need to generate a bag from them. We provide a tool to do that: https://github.com/raulmur/BagFromImages.
-
-Tip: Use a roslaunch to launch ORB_SLAM, image_view and rviz from just one instruction. We provide an example:
-
-in ROS Fuerte:
-
-roslaunch ExampleFuerte.launch
-
-in ROS Groovy or a newer version:
-
-roslaunch ExampleGroovyOrNewer.launch
-
-#5. Example Sequence We provide the settings and the rosbag of an example sequence in our lab. In this sequence you will see a loop closure and two relocalisation from a big viewpoint change.
-
-    Download the rosbag file:
-    http://webdiis.unizar.es/~raulmur/orbslam/downloads/Example.bag.tar.gz.
-
-    Alternative link: https://drive.google.com/file/d/0B8Qa2__-sGYgRmozQ21oRHhUZWM/view?usp=sharing
-
-    Uncompress the file.
-
-    Launch ORB_SLAM with the settings for the example sequence. You should have already uncompressed the vocabulary file (/Data/ORBvoc.txt.tar.gz)
-
-in ROS Fuerte:
-
-  roslaunch ExampleFuerte.launch
-
-*in ROS Groovy or newer versions*:
-
-  roslaunch ExampleGroovyHydro.launch
-
-    Once the ORB vocabulary has been loaded, play the rosbag (press space to start):
-
-     rosbag play --pause Example.bag
+    Launch U-VIP_SLAM with the settings for the example sequence. You should have the vocabulary file, and the setting file. Setting files can be found in data folder. for the aqualoc harbor dataset use Settings_VI_Aqualoc_harbor.yaml.  For Aqualoc archiological sequeces, use Settings_VI_Aqualoc_archiological.yaml. 
+    **** Important **** Remember to change the rosbag path inside the setting files.
 
 #6. The Settings File
 
-ORB_SLAM reads the camera calibration and setting parameters from a YAML file. We provide an example in Data/Settings.yaml, where you will find all parameters and their description. We use the camera calibration model of OpenCV.
+U-VIP_SLAM reads the camera calibration and setting parameters from a YAML file. We provide an example in Data/****.yaml, where you will find all parameters and their description. We use the camera calibration model of OpenCV.
 
 Please make sure you write and call your own settings file for your camera (copy the example file and modify the calibration)
 
@@ -139,4 +116,6 @@ You should expect to achieve good results in sequences similar to those in which
 
 The system is able to initialize from planar and non-planar scenes. In the case of planar scenes, depending on the camera movement relative to the plane, it is possible that the system refuses to initialize, see the paper [1] for details.
 About
+
+[1] Amarasinghe, C., Rathnaweera, A. & Maithripala, S. U-VIP-SLAM: Underwater Visual-Inertial-Pressure SLAM for Navigation of Turbid and Dynamic Environments. Arab J Sci Eng (2023). https://doi.org/10.1007/s13369-023-07906-6
 
