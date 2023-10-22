@@ -2,6 +2,15 @@
 Underwater Visual Inertial Pressure SLAM (U-VIP SLAM), a new robust monocular visual-inertial-pressure, real-time state estimator, which includes all of the essential components of a full SLAM system and is equipped with loop closure capabilities tailored to the underwater environment.
 We develop the code on top of ORB SLAM
 
+Research Paper
+
+Amarasinghe, C., Rathnaweera, A. & Maithripala, S. U-VIP-SLAM: Underwater Visual-Inertial-Pressure SLAM for Navigation of Turbid and Dynamic Environments. Arab J Sci Eng (2023). https://doi.org/10.1007/s13369-023-07906-6
+
+Youtube Videos
+https://www.youtube.com/watch?v=HvrYjkh9WR4
+https://www.youtube.com/watch?v=3J8NYGkPuwo
+https://www.youtube.com/watch?v=kqdrXbFp8Ns&t=1s
+
 #2. Prerequisites (dependencies)
 We tested all in the Ubuntu 18.04.6 LTS
 
