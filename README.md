@@ -7,6 +7,7 @@ Research Paper
 Amarasinghe, C., Rathnaweera, A. & Maithripala, S. U-VIP-SLAM: Underwater Visual-Inertial-Pressure SLAM for Navigation of Turbid and Dynamic Environments. Arab J Sci Eng (2023). https://doi.org/10.1007/s13369-023-07906-6
 
 Youtube Videos
+
 https://www.youtube.com/watch?v=HvrYjkh9WR4
 
 https://www.youtube.com/watch?v=3J8NYGkPuwo
