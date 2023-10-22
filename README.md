@@ -8,7 +8,9 @@ Amarasinghe, C., Rathnaweera, A. & Maithripala, S. U-VIP-SLAM: Underwater Visual
 
 Youtube Videos
 https://www.youtube.com/watch?v=HvrYjkh9WR4
+
 https://www.youtube.com/watch?v=3J8NYGkPuwo
+
 https://www.youtube.com/watch?v=kqdrXbFp8Ns&t=1s
 
 #2. Prerequisites (dependencies)
